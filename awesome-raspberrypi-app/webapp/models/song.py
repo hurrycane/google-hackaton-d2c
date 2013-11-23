@@ -2,6 +2,7 @@ from webapp.core import db
 from flask.ext.sqlalchemy import SQLAlchemy
 
 class Song(db.Model):
+  __tablename__ = "songs"
 
   id = db.Column(db.Integer, primary_key=True)
   artist = db.Column(db.String(255))
@@ -24,7 +25,7 @@ class Song(db.Model):
       "artist": self.artist,
       "album": self.album,
       "cover": self.cover,
-      "song_name": self.song_name,
+      "title": self.title,
       "genre": self.genre,
       "duration": self.duration,
       # "source": self.source,
