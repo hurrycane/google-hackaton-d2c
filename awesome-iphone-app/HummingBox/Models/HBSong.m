@@ -13,13 +13,17 @@
 - (id)initWithAttributes:(NSDictionary *)attributes {
     self = [super init];
     if (self) {
-        _songId = [attributes valueForKey:@"songId"];
+        _songId = [attributes valueForKey:@"id"];
         _title = [attributes valueForKey:@"title"];
         _artist = [attributes valueForKey:@"artist"];
         _album = [attributes valueForKey:@"album"];
         _genre = [attributes valueForKey:@"genre"];
-        _coverUrl = [NSURL URLWithString:[attributes valueForKey:@"coverUrl"]];
-        if ([attributes valueForKey:@"duration"]) {
+        if ([attributes valueForKey:@"cover"] &&
+            [attributes valueForKey:@"cover"] != [NSNull null]) {
+            _coverUrl = [NSURL URLWithString:[attributes valueForKey:@"cover"]];
+        }
+        if ([attributes valueForKey:@"duration"] &&
+            [attributes valueForKey:@"duration"] != [NSNull null]) {
             _duration = [[attributes valueForKey:@"duration"] floatValue];
         }
     }

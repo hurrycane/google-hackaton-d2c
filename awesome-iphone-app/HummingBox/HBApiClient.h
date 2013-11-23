@@ -19,5 +19,6 @@ typedef void (^boolWithErrorBlock) (BOOL result, NSError *error);
 + (HBApiClient *)sharedClient;
 + (void)loginWithGoogeUserId:(NSString *)googleUserID fullname:(NSString *)fullName andCallback:(boolWithErrorBlock)callback;
 + (void)getTimelineWithCallback:(arrayWithErrorBlock)callback;
++ (void)browseSongsWithCallback:(arrayWithErrorBlock)callback;
 
 @end

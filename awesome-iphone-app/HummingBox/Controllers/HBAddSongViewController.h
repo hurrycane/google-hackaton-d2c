@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HBAddSongViewController : UIViewController<UISearchBarDelegate>
+@interface HBAddSongViewController : UIViewController<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) UITableView *tableView;
 
 @end

@@ -63,4 +63,25 @@
      ];
 }
 
++ (void)browseSongsWithCallback:(arrayWithErrorBlock)callback {
+    [[HBApiClient sharedClient] getPath:@"browse.json"
+                             parameters:nil
+                                success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    NSMutableArray *result = [[NSMutableArray alloc] init];
+                                    for (NSDictionary *dict in JSON) {
+                                        HBSong *song = [[HBSong alloc] initWithAttributes:dict];
+                                        [result addObject:song];
+                                    }
+                                    if (callback) {
+                                        callback(result, nil);
+                                    }
+                                }
+                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    if (callback) {
+                                        callback(nil, error);
+                                    }
+                                }
+     ];
+}
+
 @end
