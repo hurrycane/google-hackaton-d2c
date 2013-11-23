@@ -3,7 +3,8 @@ import time
 
 import mutagen
 
-from location import LocationDetecter
+from webapp.models import Song
+from indexer.location import LocationDetecter
 
 SUPPORTED_EXTENSIONS = [ "mp3", "m4a" ]
 EXTRACTED_PARAMS = [ "album", "artist", "title", "genre" ] 
@@ -12,13 +13,20 @@ TIMEOUT = 1
 class Tag(object):
 
   def __init__(self, mutagen_obj):
+    self._params = {}
+
     for param in EXTRACTED_PARAMS:
       if param in mutagen_obj:
         setattr(self, param, mutagen_obj[param][0])
+        # for to_filter
+        self._params[param] = mutagen_obj[param][0]
       else:
         setattr(self, param, None)
 
-class Notify(object):
+  def to_filter(self):
+    return self._params
+
+class Indexer(object):
 
   def __init__(self):
     pass
@@ -38,7 +46,4 @@ class Notify(object):
         if any([ filename.endswith(ext) and not filename.startswith(".") for ext in SUPPORTED_EXTENSIONS ]):
           audiofile = Tag(mutagen.File(root + "/" + filename, easy=True))
 
-          print audiofile
-
-if __name__ == "__main__":
-  Notify().run()
+          song = Song.query.filter_by(audiofile.to_filter())

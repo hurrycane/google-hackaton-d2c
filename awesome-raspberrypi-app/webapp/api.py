@@ -1,7 +1,7 @@
-from core import app
+from webapp.core import app
 
-from models import Song
-from models import User
+from webapp.models import Song
+from webapp.models import User
 
 @app.route("/browse")
 def browse():
