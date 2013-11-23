@@ -7,6 +7,10 @@ from webapp.models import Queue
 from flask import request, Response
 import json
 
+SONG_ADDED = 0
+SONG_PLAYING = 1
+SONG_PLAYED = 2
+
 @app.route("/browse.json")
 def browse():
   songs = Song.query.filter_by(status=1).all()
@@ -27,7 +31,9 @@ def users():
 
 @app.route("/queue.json", methods=["GET"])
 def queue():
-  pass
+  songs = Queue.query.filter_by(status=SONG_ADDED).order_by(Queue.priority.desc(), Queue.id.asc()).all()
+
+  return Response(json.dumps([x.serialize for x in songs]),  mimetype='application/json')
 
 @app.route("/queue/add.json", methods=["POST"])
 def queue_add():
@@ -37,6 +43,8 @@ def queue_add():
     Queue.song_id == int(request.form["songId"])
   ).filter(
     Queue.user_id == user.id
+  ).filter(
+    Queue.status == SONG_ADDED
   ).first()
 
   if song is None:
@@ -49,9 +57,42 @@ def queue_add():
 
   return Response(json.dumps(song.serialize),  mimetype='application/json')
 
+@app.route("/queue/top.json", methods=["GET"])
+def queue_top():
+  song = Queue.query.filter_by(status=SONG_ADDED).order_by(Queue.priority.desc(), Queue.id.asc()).first()
+  if song:
+    song.status = SONG_PLAYING
+    db.session.commit()
+
+  song = song.serialize if song else {} 
+
+  return Response(json.dumps(song),  mimetype='application/json')
+
+@app.route("/queue/now.json", methods=["GET"])
+def queue_now():
+  song = Queue.query.filter_by(status=SONG_PLAYING).order_by(Queue.priority.desc(), Queue.id.asc()).first()
+  song = song.serialize if song else {} 
+
+  return Response(json.dumps(song),  mimetype='application/json')
+
+@app.route("/queue/finish.json", methods=["PUT"])
+def queue_finish():
+  songs = Queue.query.filter_by(status=SONG_PLAYING).all()
+
+  for song in songs:
+    song.status = SONG_PLAYED
+
+  db.session.commit()
+
+  return Response(json.dumps([x.serialize for x in songs]),  mimetype='application/json')
+
 @app.route("/timeline.json", methods=["GET"])
 def timeline():
-  pass
+  songs = Queue.query.filter_by(status=SONG_PLAYED).order_by(
+    Queue.priority.desc(), Queue.id.asc()
+  ).limit(20).all()
+  
+  return Response(json.dumps([x.serialize for x in songs]),  mimetype='application/json')
 
 if __name__ == "__main__":
   app.run(host="0.0.0.0", debug=True)

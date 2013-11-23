@@ -45,7 +45,7 @@ class Song(db.Model):
       "title": self.title,
       "genre": self.genre,
       "duration": self.duration,
-      # "source": self.source,
-      # "status": self.status,
+      "source": self.source,
+      "status": self.status,
       "created": self.created.strftime("%Y-%m-%d %H:%M:%S")
     }
