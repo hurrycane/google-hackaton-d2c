@@ -16,4 +16,4 @@ class LocationDetecter(object):
     #output = subprocess.call("ls -l /dev/sd*", shell=True)
     #print output
 
-    return Location("/Volumes/UNTITLED/")
+    return Location("/Volumes/BOSS/")
