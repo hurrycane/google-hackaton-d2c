@@ -8,7 +8,7 @@ import json
 
 @app.route("/browse.json")
 def browse():
-  songs = Song.query.all()
+  songs = Song.query.filter_by(status=1).all()
 
   return json.dumps([x.serialize for x in songs])
 

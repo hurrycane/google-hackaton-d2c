@@ -62,3 +62,4 @@ class Indexer(object):
             updated.append(song.id)
 
     db.session.execute(db.update(Song).where(db.not_(Song.id.in_(updated))).values(status=0))
+    db.session.commit()
