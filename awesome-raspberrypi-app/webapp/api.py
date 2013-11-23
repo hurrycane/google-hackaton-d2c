@@ -103,8 +103,13 @@ def timeline():
   songs = Queue.query.filter_by(status=SONG_PLAYED).order_by(
     Queue.priority.desc(), Queue.id.asc()
   ).limit(20).all()
+  songs = [x.serialize for x in songs]
+
+  now_playing = Queue.query.filter_by(status=SONG_PLAYING).order_by(Queue.priority.desc(), Queue.id.asc()).first()
+  if now_playing:
+    songs.insert(0, now_playing.serialize)
   
-  return Response(json.dumps([x.serialize for x in songs]),  mimetype='application/json')
+  return Response(json.dumps(songs),  mimetype='application/json')
 
 if __name__ == "__main__":
   app.run(host="0.0.0.0", debug=True)
