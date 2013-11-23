@@ -25,8 +25,7 @@ class Tag(object):
         setattr(self, param, None)
 
   def to_filter(self):
-    return {
-    }
+    return self._params
 
 class Indexer(object):
 
@@ -36,12 +35,14 @@ class Indexer(object):
   def run(self):
     self.location = LocationDetecter().get_location()
 
-    while True:
-      self.update()
-      time.sleep(TIMEOUT)
+    #while True:
+    self.update()
+    #  time.sleep(TIMEOUT)
 
   def update(self):
     path = self.location.path
+
+    updated = []
 
     for root, dirs, files in os.walk(path):
       for filename in files:
@@ -50,7 +51,14 @@ class Indexer(object):
 
           filters = audiofile.to_filter()
           song = Song.query.filter_by(**filters).first()
+
           if song == None:
             song = Song(**filters)
             db.session.add(song)
             db.session.commit()
+
+            updated.append(song.id)
+          else:
+            updated.append(song.id)
+
+    db.session.execute(db.update(Song).where(db.not_(Song.id.in_(updated))).values(status=0))

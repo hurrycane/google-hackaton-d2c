@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from webapp.core import db
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -14,8 +16,23 @@ class Song(db.Model):
   status = db.Column(db.Boolean())
   created = db.Column(db.DateTime())
 
-  def __init__(self):
-    pass
+  def __init__(self, artist=None, album=None, cover=None, title=None,
+               genre=None, duration=None, source=None, status=True,
+               created=None):
+
+    self.artist = artist
+    self.album = album
+    self.cover = cover
+    self.title = title
+    self.duration = duration
+    self.source = source
+    self.status = status
+    self.genre = genre
+
+    if not created:
+      self.created = datetime.now()
+    else:
+      self.created = created
 
   @property
   def serialize(self):
