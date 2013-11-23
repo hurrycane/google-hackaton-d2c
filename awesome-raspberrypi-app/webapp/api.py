@@ -31,14 +31,16 @@ def queue():
 
 @app.route("/queue/add.json", methods=["POST"])
 def queue_add():
+  user = User.query.filter_by(google_plus_id=request.form["googlePlusId"]).first()
+
   song = db.session.query(Queue).filter(
     Queue.song_id == int(request.form["songId"])
   ).filter(
-    Queue.user_id == int(request.form["userId"])
+    Queue.user_id == user.id
   ).first()
 
   if song is None:
-    song = Queue(int(request.form["songId"]), int(request.form["userId"]))
+    song = Queue(int(request.form["songId"]), user.id)
   else:
     song.priority += 1
 
