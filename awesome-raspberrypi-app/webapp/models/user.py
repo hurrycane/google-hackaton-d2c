@@ -2,11 +2,11 @@ from webapp.core import db
 from flask.ext.sqlalchemy import SQLAlchemy
 
 class User(db.Model):
-  __tablename__ = 'users'
+  __tablename__ = "users"
 
   id = db.Column(db.Integer, primary_key=True)
   fullname = db.Column(db.String(255))
-  google_plus_id = db.Column(db.String(255))
+  google_plus_id = db.Column(db.String(255), unique=True)
  
   def __init__(self, fullname, google_plus_id):
     self.fullname = fullname
@@ -16,6 +16,6 @@ class User(db.Model):
   def serialize(self):
     return {
       "id": self.id,
-      "fullname": self.fullname,
+      "fullName": self.fullname,
       "googlePlusId": self.google_plus_id
     }
