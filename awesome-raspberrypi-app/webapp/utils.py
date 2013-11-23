@@ -1,5 +1,5 @@
 from flask import Flask
-from settings import settings
+from webapp.settings import settings
 
 def create_app():
   app = Flask(__name__)
