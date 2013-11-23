@@ -82,6 +82,7 @@
     addSongController.view.alpha = 0.0;
     [self addChildViewController:addSongController];
     [self.view addSubview:addSongController.view];
+    [addSongController fixTableViewFrame];
     [UIView animateWithDuration:0.25
                      animations:^{
                          addSongController.view.alpha = 1.0;

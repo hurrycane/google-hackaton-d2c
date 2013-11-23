@@ -34,9 +34,10 @@
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     _noItemsImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"No Music Queue"]];
-    _noItemsImageView.frame = CGRectMake(0, 0, 174, 310);
+    _noItemsImageView.frame = CGRectZero;
     _noItemsImageView.hidden = YES;
-    _noItemsImageView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+    _noItemsImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _noItemsImageView.contentMode = UIViewContentModeCenter;
     [view addSubview:_noItemsImageView];
     
     _tableView = [[UITableView alloc] init];

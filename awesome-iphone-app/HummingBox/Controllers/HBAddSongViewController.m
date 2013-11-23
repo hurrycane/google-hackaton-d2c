@@ -66,7 +66,6 @@
     
     _tableView = [[UITableView alloc] init];
     _tableView.frame = CGRectMake(0, 70 + 44, 0, 0);
-    _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.backgroundColor = [UIColor clearColor];
@@ -103,6 +102,10 @@
         
         [self searchForSongs:nil];
     }];
+}
+
+- (void)fixTableViewFrame {
+    _tableView.frame = CGRectMake(0, 70 + 44, _initialFrame.size.width, _initialFrame.size.height - 70 - 44);
 }
 
 - (void)didReceiveMemoryWarning
@@ -208,6 +211,15 @@
                                        (self.bounds.size.height - 40) / 2,
                                        40,
                                        40);
+    self.textLabel.frame = CGRectMake(kHBTableCellHorizontalPadding,
+                                      10,
+                                      self.bounds.size.width - 2 * kHBTableCellHorizontalPadding - 50,
+                                      20);
+    self.detailTextLabel.frame = CGRectMake(kHBTableCellHorizontalPadding,
+                                            30,
+                                            self.bounds.size.width - 2 * kHBTableCellHorizontalPadding - 50,
+                                            20);
+    
 }
 
 @end

@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, assign) CGRect initialFrame;
 
+- (void)fixTableViewFrame;
+
 @end
 
 @interface HBAddSongTableViewCell : UITableViewCell
