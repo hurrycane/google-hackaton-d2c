@@ -60,6 +60,18 @@ def queue_add():
 @app.route("/queue/top.json", methods=["GET"])
 def queue_top():
   song = Queue.query.filter_by(status=SONG_ADDED).order_by(Queue.priority.desc(), Queue.id.asc()).first()
+
+  if not song:
+    song = db.engine.execute("""SELECT Songs.id FROM songs Songs
+      WHERE Songs.id NOT IN (
+        SELECT song_id FROM queue ORDER BY id DESC LIMIT 10
+      ) ORDER BY RANDOM() LIMIT 1""")
+    song = song.fetchone()
+    song = Queue(song["id"], None)
+
+    db.session.add(song)
+    db.session.commit()
+
   if song:
     song.status = SONG_PLAYING
     db.session.commit()

@@ -23,7 +23,7 @@ class Queue(db.Model):
   def serialize(self):
     return {
       "priority": self.priority,
-      "user": self.user.serialize,
+      "user": self.user.serialize if self.user else None,
       "song": self.song.serialize,
       "status": self.status
     }
