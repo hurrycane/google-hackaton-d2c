@@ -2,15 +2,16 @@ from webapp.core import app, db
 
 from webapp.models import Song
 from webapp.models import User
+from webapp.models import Queue
 
-from flask import request
+from flask import request, Response
 import json
 
 @app.route("/browse.json")
 def browse():
   songs = Song.query.filter_by(status=1).all()
 
-  return json.dumps([x.serialize for x in songs])
+  return Response(json.dumps([x.serialize for x in songs]),  mimetype='application/json')
 
 @app.route("/users.json", methods=["GET", "POST"])
 def users():
@@ -22,14 +23,33 @@ def users():
       db.session.add(user)
       db.session.commit()
 
-    return json.dumps(user.serialize)
+    return Response(json.dumps(user.serialize),  mimetype='application/json')
 
-@app.route("/queue.json", methods=["GET", "POST"])
+@app.route("/queue.json", methods=["GET"])
 def queue():
-  if request.method == "POST":
-    pass
-  if request.method == "GET":
-    pass
+  pass
+
+@app.route("/queue/add.json", methods=["POST"])
+def queue_add():
+  song = db.session.query(Queue).filter(
+    Queue.song_id == int(request.form["songId"])
+  ).filter(
+    Queue.user_id == int(request.form["userId"])
+  ).first()
+
+  if song is None:
+    song = Queue(int(request.form["songId"]), int(request.form["userId"]))
+  else:
+    song.priority += 1
+
+  db.session.add(song)
+  db.session.commit()
+
+  return Response(json.dumps(song.serialize),  mimetype='application/json')
+
+@app.route("/timeline.json", methods=["GET"])
+def timeline():
+  pass
 
 if __name__ == "__main__":
   app.run(host="0.0.0.0", debug=True)
