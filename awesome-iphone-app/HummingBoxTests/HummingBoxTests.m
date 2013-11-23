@@ -1,6 +1,6 @@
 //
-//  JukeboxTests.m
-//  JukeboxTests
+//  HummingBoxTests.m
+//  HummingBoxTests
 //
 //  Created by Stefan Filip on 23/11/13.
 //  Copyright (c) 2013 Hack Attack. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface JukeboxTests : XCTestCase
+@interface HummingBoxTests : XCTestCase
 
 @end
 
-@implementation JukeboxTests
+@implementation HummingBoxTests
 
 - (void)setUp
 {

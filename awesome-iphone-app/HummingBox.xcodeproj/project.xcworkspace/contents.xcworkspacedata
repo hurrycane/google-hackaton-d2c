@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Jukebox.xcodeproj">
+      location = "self:HummingBox.xcodeproj">
    </FileRef>
 </Workspace>
