@@ -17,4 +17,6 @@
     #import <MobileCoreServices/MobileCoreServices.h>
     #import "HBAppDelegate.h"
     #import "HBApiClient.h"
+    #import <AFNetworking/UIImageView+AFNetworking.h>
+    #import <GoogleOpenSource/GoogleOpenSource.h>
 #endif

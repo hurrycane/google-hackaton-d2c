@@ -13,7 +13,9 @@
 - (id)initWithAttributes:(NSDictionary *)attributes {
     self = [super init];
     if (self) {
-        _user = [[HBUser alloc] initWithAttributes:[attributes valueForKey:@"user"]];
+        if ([attributes valueForKey:@"user"] != [NSNull null]) {
+            _user = [[HBUser alloc] initWithAttributes:[attributes valueForKey:@"user"]];
+        }
         _song = [[HBSong alloc] initWithAttributes:[attributes valueForKey:@"song"]];
     }
     return self;

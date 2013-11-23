@@ -30,11 +30,17 @@
     UIView *view = [[UIView alloc] init];
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    GPPSignInButton *signInButton = [[GPPSignInButton alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-    signInButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin |
-                                    UIViewAutoresizingFlexibleLeftMargin |
-                                    UIViewAutoresizingFlexibleRightMargin |
-                                    UIViewAutoresizingFlexibleTopMargin;
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.image = [UIImage imageNamed:@"Login Logo"];
+    imageView.frame = CGRectMake(0, -70, 172, 184);
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin |
+                                 UIViewAutoresizingFlexibleLeftMargin |
+                                 UIViewAutoresizingFlexibleRightMargin |
+                                 UIViewAutoresizingFlexibleTopMargin;
+    [view addSubview:imageView];
+    
+    GPPSignInButton *signInButton = [[GPPSignInButton alloc] initWithFrame:CGRectMake(0, 420, 290, 44)];
+    signInButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
     [view addSubview:signInButton];
     
     self.view = view;

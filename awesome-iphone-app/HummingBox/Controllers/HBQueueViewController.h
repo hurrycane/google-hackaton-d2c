@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HBQueueViewController : UIViewController
+@interface HBQueueViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+
+@end
+
+@interface HBQueueTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) UIImageView *coverImageView;
+@property (nonatomic, strong) UILabel *cellCountLabel;
+@property (nonatomic, strong) UIView *selectionCircle;
 
 @end

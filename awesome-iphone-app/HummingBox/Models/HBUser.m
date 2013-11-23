@@ -15,7 +15,7 @@
 - (id)initWithAttributes:(NSDictionary *)attributes {
     self = [super init];
     if (self) {
-        _googlePlusID = [attributes valueForKey:@"userID"];
+        _googlePlusID = [attributes valueForKey:@"googlePlusId"];
         _fullName = [attributes valueForKey:@"fullName"];
     }
     return self;

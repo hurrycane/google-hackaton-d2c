@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define kHBQueueHasChangedNotification                  @"kHBQueueHasChangedNotification"
+
 @interface HBAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

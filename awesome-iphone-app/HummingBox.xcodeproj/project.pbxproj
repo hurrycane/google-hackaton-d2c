@@ -40,6 +40,7 @@
 		6370C8D51840EF7E0064FA2F /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6370C8CB1840EF7E0064FA2F /* OpenSans-Regular.ttf */; };
 		6370C8D61840EF7E0064FA2F /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6370C8CC1840EF7E0064FA2F /* OpenSans-Semibold.ttf */; };
 		6370C8D71840EF7E0064FA2F /* OpenSans-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6370C8CD1840EF7E0064FA2F /* OpenSans-SemiboldItalic.ttf */; };
+		6370C8DA184114CA0064FA2F /* HBQueueItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6370C8D9184114CA0064FA2F /* HBQueueItem.m */; };
 		D034E4A4FD214F62AF2CB2E1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD493B1D994B469C81973DE5 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,8 @@
 		6370C8CB1840EF7E0064FA2F /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		6370C8CC1840EF7E0064FA2F /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		6370C8CD1840EF7E0064FA2F /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		6370C8D8184114CA0064FA2F /* HBQueueItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBQueueItem.h; sourceTree = "<group>"; };
+		6370C8D9184114CA0064FA2F /* HBQueueItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBQueueItem.m; sourceTree = "<group>"; };
 		FD493B1D994B469C81973DE5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -237,6 +240,8 @@
 				6370C8BD1840D1390064FA2F /* HBSongUserTuple.m */,
 				6370C8BF1840D31A0064FA2F /* HBTimelineItem.h */,
 				6370C8C01840D31A0064FA2F /* HBTimelineItem.m */,
+				6370C8D8184114CA0064FA2F /* HBQueueItem.h */,
+				6370C8D9184114CA0064FA2F /* HBQueueItem.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -316,6 +321,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Hack Attack";
 				TargetAttributes = {
+					636F42311840A9EB00810C04 = {
+						DevelopmentTeam = 9U4VFXMFDC;
+					};
 					636F424C1840A9EB00810C04 = {
 						TestTargetID = 636F42311840A9EB00810C04;
 					};
@@ -419,6 +427,7 @@
 				636F42421840A9EB00810C04 /* main.m in Sources */,
 				6370C8B21840BDD90064FA2F /* HBTimelineViewController.m in Sources */,
 				6370C8C11840D31A0064FA2F /* HBTimelineItem.m in Sources */,
+				6370C8DA184114CA0064FA2F /* HBQueueItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,10 +547,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HummingBox/HummingBox-Prefix.pch";
 				INFOPLIST_FILE = "HummingBox/HummingBox-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -552,10 +564,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HummingBox/HummingBox-Prefix.pch";
 				INFOPLIST_FILE = "HummingBox/HummingBox-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

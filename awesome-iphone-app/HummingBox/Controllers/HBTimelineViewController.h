@@ -19,5 +19,6 @@
 @property (nonatomic, strong) UIImageView *avatarImageView;
 @property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) UILabel *timestampLabel;
+@property (nonatomic, strong) UIImageView *nowPlayingImageView;
 
 @end

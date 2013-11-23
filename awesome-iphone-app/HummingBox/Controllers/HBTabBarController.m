@@ -11,6 +11,8 @@
 #import "HBAddSongViewController.h"
 #import "HBQueueViewController.h"
 
+#define kHBOffsetYAdd                                   80
+
 @interface HBTabBarController() {
     UIButton *_timelineButton;
     UIButton *_queueButton;
@@ -71,7 +73,28 @@
 }
 
 - (void)addSong {
-    
+    HBAddSongViewController *addSongController = [[HBAddSongViewController alloc] init];
+    addSongController.view.frame = CGRectMake(0,
+                                              self.tabBar.frame.origin.y - 30,
+                                              self.view.bounds.size.width,
+                                              self.view.bounds.size.height - kHBOffsetYAdd);
+    addSongController.initialFrame = addSongController.view.frame;
+    addSongController.view.alpha = 0.0;
+    [self addChildViewController:addSongController];
+    [self.view addSubview:addSongController.view];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         addSongController.view.alpha = 1.0;
+                     }
+                     completion:^(BOOL finished) {
+                         CGRect frame = addSongController.view.frame;
+                         frame.origin.y = kHBOffsetYAdd;
+                         [UIView animateWithDuration:0.4
+                                          animations:^{
+                                              addSongController.view.frame = frame;
+                                          }];
+                     }
+     ];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

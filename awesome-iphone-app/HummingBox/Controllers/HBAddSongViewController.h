@@ -11,5 +11,13 @@
 @interface HBAddSongViewController : UIViewController<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, assign) CGRect initialFrame;
+
+@end
+
+@interface HBAddSongTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) UIImageView *coverImageView;
 
 @end

@@ -10,6 +10,7 @@
 #import "HBUser.h"
 #import "HBSong.h"
 #import "HBTimelineItem.h"
+#import "HBQueueItem.h"
 
 typedef void (^arrayWithErrorBlock) (NSArray *array, NSError *error);
 typedef void (^boolWithErrorBlock) (BOOL result, NSError *error);
@@ -20,5 +21,7 @@ typedef void (^boolWithErrorBlock) (BOOL result, NSError *error);
 + (void)loginWithGoogeUserId:(NSString *)googleUserID fullname:(NSString *)fullName andCallback:(boolWithErrorBlock)callback;
 + (void)getTimelineWithCallback:(arrayWithErrorBlock)callback;
 + (void)browseSongsWithCallback:(arrayWithErrorBlock)callback;
++ (void)getQueueWithCallback:(arrayWithErrorBlock)callback;
++ (void)postSongToQueue:(NSString *)songId googleUserId:(NSString *)googleUserID andCallback:(boolWithErrorBlock)callback;
 
 @end

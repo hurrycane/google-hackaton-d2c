@@ -7,7 +7,6 @@
 //
 
 #import "HBTimelineViewController.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
 
 #define kHBAvatarSize                                           45
 #define kHBTableCellHeight                                      65
@@ -16,6 +15,7 @@
 
 @interface HBTimelineViewController () {
     NSArray *_timelineItems;
+    NSTimer *_pollingTimer;
 }
 
 @end
@@ -26,21 +26,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"Timeline";
-        
-        HBUser *user= [[HBUser alloc] init];
-        user.fullName = @"Stefan Filip";
-        user.googlePlusID = @"100328162309769669535";
-        
-        HBSong *song = [[HBSong alloc] init];
-        song.title = @"Yellow";
-        song.artist = @"Coldplay";
-        song.coverUrl = [NSURL URLWithString:@"http://rekwired.com/wp-content/uploads/2009/11/coldplay-xy.jpg"];
-        
-        HBTimelineItem *item = [[HBTimelineItem alloc] init];
-        item.user = user;
-        item.song = song;
-        
-        _timelineItems = @[item, item, item, item, item, item, item, item, item];
     }
     return self;
 }
@@ -58,6 +43,20 @@
     [view addSubview:_tableView];
     
     self.view = view;
+}
+
+- (void)dealloc {
+    if (_pollingTimer) {
+        [_pollingTimer invalidate];
+    }
+}
+
+- (void)loadTimeline {
+    [HBApiClient getTimelineWithCallback:^(NSArray *array, NSError *error) {
+        _timelineItems = array;
+        
+        [_tableView reloadData];
+    }];
 }
 
 - (void)viewDidLoad {
@@ -134,6 +133,14 @@
     [tableFooter addSubview:footerLabel];
     
     _tableView.tableFooterView = tableFooter;
+    
+    [self loadTimeline];
+    
+    _pollingTimer = [NSTimer scheduledTimerWithTimeInterval:10
+                                                     target:self
+                                                   selector:@selector(loadTimeline)
+                                                   userInfo:nil
+                                                    repeats:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -161,8 +168,14 @@
     
     cell.coverImageView.image = nil;
     cell.avatarImageView.image = nil;
-    [cell.avatarImageView setImageWithURL:[item.user googlePlusAvatarInSize:200]];
+    if (item.user) {
+        [cell.avatarImageView setImageWithURL:[item.user googlePlusAvatarInSize:200]];
+    }
+    else {
+        cell.avatarImageView.image = [UIImage imageNamed:@"Default Avatar"];
+    }
     [cell.coverImageView setImageWithURL:item.song.coverUrl];
+    cell.nowPlayingImageView.hidden = !item.isPlaying;
     
     return cell;
 }
@@ -193,6 +206,9 @@
         _line.backgroundColor = [UIColor colorWithRed: 45/255.0 green: 48/255.0 blue: 53/255.0 alpha:1.0];
         [self addSubview:_line];
         
+        _nowPlayingImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Now Playing"]];
+        [self addSubview:_nowPlayingImageView];
+        
         _avatarImageView = [[UIImageView alloc] init];
         _avatarImageView.clipsToBounds = YES;
         _avatarImageView.layer.borderColor = [UIColor colorWithRed: 45/255.0 green: 48/255.0 blue: 53/255.0 alpha:1.0].CGColor;
@@ -206,6 +222,7 @@
         [self addSubview:_infoPanel];
         
         _coverImageView = [[UIImageView alloc] init];
+        _coverImageView.backgroundColor = [UIColor blackColor];
         [_infoPanel addSubview:_coverImageView];
         
         self.textLabel.font = [UIFont fontWithName:@"OpenSans-Semibold" size:14];
@@ -227,6 +244,10 @@
                              0,
                              kHBVerticalLineWidth,
                              self.bounds.size.height);
+    _nowPlayingImageView.frame = CGRectMake(kHBTableCellHorizontalPadding - 5,
+                                            (self.bounds.size.height - kHBAvatarSize) / 2 - 5,
+                                            55,
+                                            55);
     _avatarImageView.frame = CGRectMake(kHBTableCellHorizontalPadding,
                                         (self.bounds.size.height - kHBAvatarSize) / 2,
                                         kHBAvatarSize,
@@ -242,6 +263,20 @@
     self.detailTextLabel.frame = CGRectMake(10, 22, _infoPanel.bounds.size.width - 4 - 10 - 58, 14);
     
     _coverImageView.frame = CGRectMake(_infoPanel.bounds.size.width - 48 - 4, 4, 48, 48);
+
+    if (!_nowPlayingImageView.hidden) {
+        CABasicAnimation* rotationAnimation;
+        rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0];
+        rotationAnimation.duration = 1;
+        rotationAnimation.cumulative = YES;
+        rotationAnimation.repeatCount = 100000000;
+        
+        [_nowPlayingImageView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+    }
+    else {
+        [_nowPlayingImageView.layer removeAllAnimations];
+    }
 }
 
 @end

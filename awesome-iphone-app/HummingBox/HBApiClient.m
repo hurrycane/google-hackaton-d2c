@@ -9,7 +9,7 @@
 #import "HBApiClient.h"
 #import <AFNetworking/AFNetworking.h>
 
-#define kHBApiBaseURL                               @"http://172.28.101.50:5000"
+#define kHBApiBaseURL                               @"http://192.168.2.68:5000"
 
 @implementation HBApiClient
 
@@ -82,6 +82,46 @@
                                     }
                                 }
      ];
+}
+
++ (void)getQueueWithCallback:(arrayWithErrorBlock)callback {
+    [[HBApiClient sharedClient] getPath:@"queue.json"
+                             parameters:nil
+                                success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    NSMutableArray *result = [[NSMutableArray alloc] init];
+                                    for (NSDictionary *dict in JSON) {
+                                        HBQueueItem *queueItem = [[HBQueueItem alloc] initWithAttributes:dict];
+                                        [result addObject:queueItem];
+                                    }
+                                    if (callback) {
+                                        callback(result, nil);
+                                    }
+                                }
+                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    if (callback) {
+                                        callback(nil, error);
+                                    }
+                                }
+     ];
+}
+
++ (void)postSongToQueue:(NSString *)songId googleUserId:(NSString *)googleUserID andCallback:(boolWithErrorBlock)callback {
+    NSDictionary *params = @{
+                             @"songId" : songId,
+                             @"googlePlusId" : googleUserID
+                             };
+    [[HBApiClient sharedClient] postPath:@"queue/add.json"
+                              parameters:params
+                                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                     if (callback) {
+                                         callback(YES, nil);
+                                     }
+                                 }
+                                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                     if (callback) {
+                                         callback(NO, error);
+                                     }
+                                 }];
 }
 
 @end
