@@ -3,6 +3,7 @@ from webapp.core import app, db
 from webapp.models import Song
 from webapp.models import User
 from webapp.models import Queue
+from webapp.models import History
 
 from flask import request, Response
 import json
@@ -42,15 +43,22 @@ def queue_add():
   song = db.session.query(Queue).filter(
     Queue.song_id == int(request.form["songId"])
   ).filter(
-    Queue.user_id == user.id
-  ).filter(
     Queue.status == SONG_ADDED
   ).first()
 
   if song is None:
     song = Queue(int(request.form["songId"]), user.id)
   else:
-    song.priority += 1
+    history = db.session.query(History).filter(
+      History.user_id == user.id
+    ).filter(
+      History.queue_id == song.id
+    ).first()
+
+    if not history:
+      song.priority += 1
+      history = History(song.id, user.id)
+      db.session.add(history)
 
   db.session.add(song)
   db.session.commit()
