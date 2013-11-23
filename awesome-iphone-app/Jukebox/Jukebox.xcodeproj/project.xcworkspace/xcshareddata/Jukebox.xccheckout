@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F1DA9654-A848-4036-B242-5AF3A48FF323</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Jukebox</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8BE90F04-9B74-484A-BAFE-39DA70AFB9A3</key>
+		<string>ssh://github.com/hurrycane/google-hackaton-d2c.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>awesome-iphone-app/Jukebox/Jukebox.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8BE90F04-9B74-484A-BAFE-39DA70AFB9A3</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/hurrycane/google-hackaton-d2c.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8BE90F04-9B74-484A-BAFE-39DA70AFB9A3</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8BE90F04-9B74-484A-BAFE-39DA70AFB9A3</string>
+			<key>IDESourceControlWCCName</key>
+			<string>google-hackaton-d2c</string>
+		</dict>
+	</array>
+</dict>
+</plist>
