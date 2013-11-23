@@ -53,7 +53,7 @@ def queue_add():
       History.user_id == user.id
     ).filter(
       History.queue_id == song.id
-    ).first()
+    ).all()
 
     if not history:
       song.priority += 1
