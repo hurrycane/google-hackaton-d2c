@@ -1,7 +1,10 @@
 import os
 import time
+import json
+from urllib import quote
 
 import mutagen
+import requests
 
 from webapp.core import db
 from webapp.models import Song
@@ -42,16 +45,12 @@ class Tag(object):
       # bucket=id:7digital-US&bucket=audio_summary&bucket=tracks
 
       try:
-        results = song.search(artist=self.artist, title=self.title, buckets=['id:7digital-US', 'tracks'], limit=True, results=1)
 
-        if len(results) > 0:
-          images = results[0].get_tracks('7digital-US')[0]
+        response = json.loads(requests.get("http://ws.audioscrobbler.com/2.0/?method=track.search&artist=%s&track=%s&api_key=cfbaac1876f3141cab02e1235b958e20&format=json" % (quote(self.artist), quote(self.title))).text)
 
-          if "release_image" in images:
-            self._params["cover"] = images["release_image"]
+        self._params["cover"] = response["results"]["trackmatches"]["track"][0]["image"][2]["#text"]
 
       except:
-        # pokemon
         pass
 
   def to_filter(self):
@@ -70,6 +69,7 @@ class Indexer(object):
     #  time.sleep(TIMEOUT)
 
   def update(self):
+    # http://ws.audioscrobbler.com/2.0/?method=track.search&track=Believe&api_key=cfbaac1876f3141cab02e1235b958e20&format=json
     path = self.location.path
     updated = []
 

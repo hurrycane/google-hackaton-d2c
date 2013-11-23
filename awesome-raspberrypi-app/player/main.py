@@ -1,10 +1,11 @@
 import requests
 import json
 import time
+import subprocess
 
 from multiprocessing import Process, Pipe
 
-ENDPOINT = "http://192.168.2.62:5000"
+ENDPOINT = "http://192.168.2.68:5000"
 
 class RestClient(object):
 
@@ -23,8 +24,9 @@ class Player(object):
     pass
 
   def play_song(self, song):
-    print "Playing song %s" % song["title"]
-    time.sleep(song["duration"])
+    # vlc HugeWAV.wav --quiet --play-and-exit -I dummy --start-time 16
+    print "vlc %s --quiet --play-and-exit -I dummy" % song["source"]
+    subprocess.call("vlc \"%s\" --quiet --play-and-exit -I dummy" % song["source"], shell=True)
 
   def play(self):
     client = RestClient(ENDPOINT)
@@ -39,5 +41,3 @@ class Player(object):
       proc.join()
 
       client.finish()
-
-      break
