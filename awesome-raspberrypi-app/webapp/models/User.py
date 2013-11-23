@@ -1,14 +1,21 @@
-from app import db
+from core import db
 from flask.ext.sqlalchemy import SQLAlchemy
 
 class User(db.Model):
+  __tablename__ = 'users'
+
   id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(80), unique=True)
-  email = db.Column(db.String(120), unique=True)
+  fullname = db.Column(db.String(255))
+  google_plus_id = db.Column(db.String(255))
+ 
+  def __init__(self, fullname, google_plus_id):
+    self.fullname = fullname
+    self.google_plus_id = google_plus_id
 
-  def __init__(self, username, email):
-    self.username = username
-    self.email = email
-
-  def __repr__(self):
-    return '<User %r>' % self.username
+  @property
+  def serialize(self):
+    return {
+      "id": self.id,
+      "fullname": self.fullname,
+      "googlePlusId": self.google_plus_id
+    }

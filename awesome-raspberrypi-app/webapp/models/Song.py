@@ -13,3 +13,21 @@ class Song(db.Model):
   source = db.Column(db.String(255))
   status = db.Column(db.Boolean())
   created = db.Column(db.DateTime())
+
+  def __init__(self):
+    pass
+
+  @property
+  def serialize(self):
+    return {
+      "id": self.id,
+      "artist": self.artist,
+      "album": self.album,
+      "cover": self.cover,
+      "song_name": self.song_name,
+      "genre": self.genre,
+      "duration": self.duration,
+      # "source": self.source,
+      # "status": self.status,
+      "created": self.created.strftime("%Y-%m-%d %H:%M:%S")
+    }
