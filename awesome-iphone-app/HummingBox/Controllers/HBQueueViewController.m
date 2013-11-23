@@ -37,6 +37,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"App Logo"]];
+    imageView.frame = CGRectMake(0, 0, 129, 21);
+    self.navigationItem.titleView = imageView;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -16,11 +16,13 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor colorWithRed: 58/255.0 green: 63/255.0 blue: 71/255.0 alpha:1.0];
     [self.window makeKeyAndVisible];
     
     HBLoginViewController *loginController = [[HBLoginViewController alloc] init];
     self.window.rootViewController = loginController;
+    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"Navigation Bar"] forBarMetrics:UIBarMetricsDefault];
     
     return YES;
 }
