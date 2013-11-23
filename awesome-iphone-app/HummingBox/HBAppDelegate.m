@@ -7,6 +7,8 @@
 //
 
 #import "HBAppDelegate.h"
+#import "HBLoginViewController.h"
+#import <GooglePlus/GooglePlus.h>
 
 @implementation HBAppDelegate
 
@@ -16,7 +18,17 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    HBLoginViewController *loginController = [[HBLoginViewController alloc] init];
+    self.window.rootViewController = loginController;
+    
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [GPPURLHandler handleURL:url
+                  sourceApplication:sourceApplication
+                         annotation:annotation];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
