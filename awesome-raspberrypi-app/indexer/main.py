@@ -3,6 +3,7 @@ import time
 
 import mutagen
 
+from webapp.core import db
 from webapp.models import Song
 from indexer.location import LocationDetecter
 
@@ -24,7 +25,8 @@ class Tag(object):
         setattr(self, param, None)
 
   def to_filter(self):
-    return self._params
+    return {
+    }
 
 class Indexer(object):
 
@@ -46,4 +48,9 @@ class Indexer(object):
         if any([ filename.endswith(ext) and not filename.startswith(".") for ext in SUPPORTED_EXTENSIONS ]):
           audiofile = Tag(mutagen.File(root + "/" + filename, easy=True))
 
-          song = Song.query.filter_by(audiofile.to_filter())
+          filters = audiofile.to_filter()
+          song = Song.query.filter_by(**filters).first()
+          if song == None:
+            song = Song(**filters)
+            db.session.add(song)
+            db.session.commit()
