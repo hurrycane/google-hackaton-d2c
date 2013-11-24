@@ -125,6 +125,9 @@
     
     cell.coverImageView.image = nil;
     [cell.coverImageView setImageWithURL:item.song.coverUrl];
+    cell.avatarImageView.image = nil;
+    [cell.avatarImageView setImageWithURL:[item.user googlePlusAvatarInSize:72]];
+
     cell.cellCountLabel.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
     
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
@@ -173,6 +176,11 @@
         _countCircle.backgroundColor = [UIColor colorWithRed: 50/255.0 green: 54/255.0 blue: 60/255.0 alpha:1.0];
         [_infoPanel addSubview:_countCircle];
         
+        _avatarImageView = [[UIImageView alloc] init];
+        _avatarImageView.alpha = 0.2;
+        _avatarImageView.clipsToBounds = YES;
+        [_countCircle addSubview:_avatarImageView];
+        
         _cellCountLabel = [[UILabel alloc] init];
         _cellCountLabel.backgroundColor = [UIColor clearColor];
         _cellCountLabel.textColor = [UIColor whiteColor];
@@ -220,14 +228,14 @@
                                     36,
                                     36);
     _countCircle.layer.cornerRadius = 18;
+    _avatarImageView.frame = _countCircle.bounds;
+    _avatarImageView.layer.cornerRadius = _countCircle.layer.cornerRadius;
     _cellCountLabel.frame = _countCircle.bounds;
-    
     
     self.textLabel.frame = CGRectMake(60, 4, _infoPanel.bounds.size.width - 5 - 10 - 58 - 48, 16);
     self.detailTextLabel.frame = CGRectMake(60, 22, _infoPanel.bounds.size.width - 5 - 10 - 58 - 48, 16);
     
     _coverImageView.frame = CGRectMake(_infoPanel.bounds.size.width - 48 - 5, 5, 48, 48);
-    
 }
 
 @end

@@ -19,5 +19,6 @@
 @property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) UILabel *cellCountLabel;
 @property (nonatomic, strong) UIView *selectionCircle;
+@property (nonatomic, strong) UIImageView *avatarImageView;
 
 @end

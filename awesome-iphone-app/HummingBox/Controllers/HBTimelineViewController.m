@@ -169,7 +169,7 @@
     cell.coverImageView.image = nil;
     cell.avatarImageView.image = nil;
     if (item.user) {
-        [cell.avatarImageView setImageWithURL:[item.user googlePlusAvatarInSize:200]];
+        [cell.avatarImageView setImageWithURL:[item.user googlePlusAvatarInSize:kHBAvatarSize * 2]];
     }
     else {
         cell.avatarImageView.image = [UIImage imageNamed:@"Default Avatar"];

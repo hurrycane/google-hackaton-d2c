@@ -9,7 +9,7 @@
 #import "HBApiClient.h"
 #import <AFNetworking/AFNetworking.h>
 
-#define kHBApiBaseURL                               @"http://192.168.2.68:5000"
+#define kHBApiBaseURL                               @"http://172.28.100.214:5000"
 
 @implementation HBApiClient
 
