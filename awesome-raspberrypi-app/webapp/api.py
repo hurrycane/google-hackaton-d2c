@@ -6,6 +6,7 @@ from webapp.models import Queue
 from webapp.models import History
 
 from flask import request, Response
+from datetime import datetime
 import json
 
 SONG_ADDED = 0
@@ -47,7 +48,7 @@ def queue_add():
   ).first()
 
   if song is None:
-    song = Queue(int(request.form["songId"]), user.id)
+    song = Queue(int(request.form["songId"]), user.id, 1, SONG_ADDED, datetime.now())
   else:
     history = db.session.query(History).filter(
       History.user_id == user.id
@@ -57,6 +58,7 @@ def queue_add():
 
     if not history:
       song.priority += 1
+      song.datetime = datetime.now()
       history = History(song.id, user.id)
       db.session.add(history)
 
@@ -109,11 +111,11 @@ def queue_finish():
 @app.route("/timeline.json", methods=["GET"])
 def timeline():
   songs = Queue.query.filter_by(status=SONG_PLAYED).order_by(
-    Queue.priority.desc(), Queue.id.asc()
+    Queue.created.asc()
   ).limit(20).all()
   songs = [x.serialize for x in songs]
 
-  now_playing = Queue.query.filter_by(status=SONG_PLAYING).order_by(Queue.priority.desc(), Queue.id.asc()).first()
+  now_playing = Queue.query.filter_by(status=SONG_PLAYING).order_by(Queue.created.asc()).first()
   if now_playing:
     songs.insert(0, now_playing.serialize)
   
