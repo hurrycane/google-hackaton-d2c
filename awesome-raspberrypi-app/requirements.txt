@@ -1,0 +1,6 @@
+flask
+Flask-SQLAlchemy
+pysqlite
+mutagen
+pyechonest
+requests
